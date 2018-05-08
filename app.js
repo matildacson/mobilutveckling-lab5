@@ -73,11 +73,11 @@ back = function() {
 
 forward = function() {
     if(app.index === 0) {
-        app.index = 0;
-    } else (
-        app.index = app.index - 1;
+        app.index = 0
+    } else {
+        app.index = app.index - 1
         fillpage()
-    )
+    }
 }
 
 fillPage = function() {
