@@ -12,62 +12,41 @@ sensor.image = "https://evothings.com/demos/dome_pics/IMG_1758.JPG";
 
 app = {}
 
+
 app.initialize = function() {
-    getJSON();
+    app.getJSON();
     app.index = 0;
-    fillpage();
 }
 
 
 // Function to retrieve data, placing it in a "response" object
-function getJSON(daysback) 
-    {
-    if (window.cordova) 
+app.getJSON = function() {
+    console.log('Using AJAX via jquery');
+    $.ajax({
+        url: mSensorDataURL + sensor.key + ".json?gt[timestamp]=now-1day",
+        jsonp: "callback",
+        cache: true,
+        dataType: "jsonp",
+        data: 
         {
-            console.log('Using Apache Cordova HTTP GET function');
-            cordovaHTTP.get(
-                mSensorDataURL + sensor.key + '.json?gt[timestamp]=now-1day&page=1',
-                function (response) 
-                    {
-                        if (response) 
-                            {
-                                sensor.data = JSON.parse(response.data)[0];
-                                sensor.fullData = JSON.parse(response.data);
-                            }
-                    },
-                function (error) 
-                    {
-                    console.log(JSON.stringify(error));
-                    });
-        }    
-    else 
+            page: 1
+        },
+        success: function(response) 
         {
-            console.log('Not using Cordova, fallback to AJAX via jquery');
-            $.ajax({
-                    url: mSensorDataURL + sensor.key + ".json?gt[timestamp]=now-1day",
-                    jsonp: "callback",
-                    cache: true,
-                    dataType: "jsonp",
-                    data: 
-                        {
-                            page: 1
-                        },
-                    success: function(response) 
-                        {
-                            if (response && response[0]) 
-                                {
-                                    sensor.data = response[0];
-                                    sensor.fullData = response;
-                                }
-                        }
-                });
+            if (response && response[0]) 
+            {
+                sensor.data = response[0];
+                sensor.fullData = response;
+                fillPage();
+            }
         }
+    });
 }
-
+    
 back = function() {
     if(app.index != sensor.fullData.length) {
         app.index = app.index + 1
-        fillpage();
+        fillPage();
     }
 }
 
@@ -76,15 +55,26 @@ forward = function() {
         app.index = 0
     } else {
         app.index = app.index - 1
-        fillpage()
+        fillPage()
     }
 }
 
 fillPage = function() {
+    var currentData = sensor.fullData[app.index];
+
+    // Timestamp
+    time = document.getElementById("timeHeader");
+    var date = new Date(currentData["timestamp"]);
+    time.innerHTML = date.toUTCString();
     
+    // Temperature
+    
+    
+    // Humidity
+    
+    
+    //
 }
 
-
-
-
 app.initialize();
+//document.addEventListener("deviceready", app.initialize(), false);
