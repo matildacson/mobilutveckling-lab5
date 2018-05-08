@@ -8,10 +8,11 @@
 		shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 
 	<title>Basic Template App</title>
-
 	<style>
 		@import 'ui/css/evothings-app.css';
-	</style>
+    </style>
+
+    <link rel="stylesheet" href="style.css" type="text/css"/>
 
 	<script>
 	// Redirect console.log to Evothings Workbench.
@@ -22,20 +23,32 @@
 
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
 
-	<header>
-		<button class="back" onclick="history.back()">
-			<img src="ui/images/arrow-left.svg" />
-		</button>
+    <div class="timeHeader">
+        <div class="header"><button>Back</button></div>
+        <div id="timeHeader" class="header">Time</div>
+        <div class="header"><button>Forward</button></div>
+    </div>
 
-		<img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
+    <div class="row">
+        <div class="smallContainer">
+            <div class="header">Temperature</div>
+            <div class="temp1"></div>
+            <div class="temp2"></div>
+        </div>
+        <div class="smallContainer">
+            <div class="header">Humidity</div>
+            <div class="humidity1"></div>
+            <div class="humidity2"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="tallContainer"></div>
+        <div class="tallContainer"></div>
+        <div class="tallContainer"></div>
+    </div>
 
-		<!--<button class="menu" onclick=""><img src="ui/images/menu.svg" /></button>-->
-	</header>
-
-
-
-<button onClick="getJSON();">Click to recieve sensor data</button>
-<div id="printHere"></div>
+    <button onClick="getJSON();">Click to recieve sensor data</button>
+    <div id="printHere"></div>
 
 	<script src="cordova.js"></script>
 	<script src="libs/evothings/evothings.js"></script>
