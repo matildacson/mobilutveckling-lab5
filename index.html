@@ -21,51 +21,25 @@
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
 
     <div class="timeHeader">
-        <div><button>Back</button></div>
+        <div><button onClick="back()">Back</button></div>
         <div id="timestamp">Time</div>
-        <div><button>Forward</button></div>
+        <div><button onClick="forward()">Forward</button></div>
     </div>
 
-    <div class="smallContainers">
-        <div class="header">Temperature</div>
-        <div class="header">Humidity</div>
-        <div class="smallContainer">
-            <div id="temp1" class="sensor1">38 grader</div>
-            <div id="temp2" class="sensor2">40 grader</div>
-        </div>
-        <div class="smallContainer">
-            <div id="humidity1" class="sensor1">23</div>
-            <div id="humidity2" class="sensor2">23</div>
-        </div>
-    </div>
-    <div class="tallContainers">
-        <div class="row">
-            <div class="header">Lumination</div>
-            <div class="header">Barometic Pressure</div>
-            <div class="header">Carbon Dioxide</div>
-        </div>
-        <div class="tallContainer">
+    <div class="buttonContainer">
+	</div>
+	
+	<canvas id="myChart"></canvas>
 
-            <div class="chart sensor1" id="lumination1">15</div>
-            <div class="chart sensor2" id="lumination2">12</div>
-        </div>
-        <div class="tallContainer">
-            <div class="chart sensor1" id="pressure1">34</div>
-            <div class="chart sensor2" id="pressure2">12</div>
-        </div>
-        <div class="tallContainer">
-            <div class="chart sensor1" id="carbon1">34</div>
-            <div class="chart sensor2" id="carbon 2">25</div>
-        </div>
-    </div>
 
-    <button onClick="getJSON();">Click to recieve sensor data</button>
-    <div id="printHere"></div>
+
+
 
 	<script src="cordova.js"></script>
 	<script src="libs/evothings/evothings.js"></script>
 	<script src="libs/evothings/ui/ui.js"></script>
 	<script src="libs/jquery/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
     <script src="app.js"></script>
 	<!-- TODO: Add libraries that you need -->
