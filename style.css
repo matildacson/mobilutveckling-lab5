@@ -1,11 +1,44 @@
 .timeHeader{
 height: 10vh;
 }
+.smallContainers{
+text-align: center;
+height: 40vh;
+}
 
-.header{
+.tallContainers{
+text-align: center;
+height: 40vh;
+}
+
+.smallContainers .header{
+display: inline-block;
+width: 49%;
+}
+
+.smallContainer, .tallContainer{
+vertical-align: top;
 display: inline-block;
 }
 
-.row{
-height: 45vh;
+.smallContainer{
+width: 45vw;
+}
+
+.tallContainer{
+vertical-align: bottom;
+width: 30vw;
+}
+
+.sensor1{
+background: green;
+}
+
+.sensor2{
+background: blue;
+}
+
+.chart{
+display: inline-block;
+width: 40%;
 }
