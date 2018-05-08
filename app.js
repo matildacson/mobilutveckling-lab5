@@ -10,9 +10,17 @@ sensor.key = "GqXO9z3ae9tODKPPPO2YHxw39By";
 // A bitmap image describing where the sensor is located
 sensor.image = "https://evothings.com/demos/dome_pics/IMG_1758.JPG";
 
+app = {}
+
+app.initialize = function() {
+    getJSON();
+    app.index = 0;
+    fillpage();
+}
+
 
 // Function to retrieve data, placing it in a "response" object
-function getJSON() 
+function getJSON(daysback) 
     {
     if (window.cordova) 
         {
@@ -25,7 +33,6 @@ function getJSON()
                             {
                                 sensor.data = JSON.parse(response.data)[0];
                                 sensor.fullData = JSON.parse(response.data);
-                                printData();
                             }
                     },
                 function (error) 
@@ -51,31 +58,33 @@ function getJSON()
                                 {
                                     sensor.data = response[0];
                                     sensor.fullData = response;
-                                    printData();
                                 }
                         }
                 });
         }
 }
 
-
-function printData()    
-    {
-        if (sensor && sensor.data) 
-            {
-            // Display the info.
-                html = '<h1>Sensor Data</h1>'
-                 + '<br /><div id="time">Time  ' + sensor.data.timestamp + '</div>'
-                 + '<div id="hum">Humidity ' + sensor.data.h + ' % (rel)</div>'
-                 + '<div id="temp">Temperature ' + sensor.data.t + ' celcius</div>'
-                 + '<img src="' + sensor.image + '" />'
-            } 
-    else 
-            {
-                html = '<h1>Sensor Data</h1>'
-                 + '<br />Sorry, sensor data not available right now :(</br>'
-                 + '<img src="' + sensor.image + '" />'
-            }
-    document.getElementById("printHere").innerHTML= html;
+back = function() {
+    if(app.index != sensor.fullData.length) {
+        app.index = app.index + 1
+        fillpage();
+    }
 }
 
+forward = function() {
+    if(app.index === 0) {
+        app.index = 0;
+    } else (
+        app.index = app.index - 1;
+        fillpage()
+    )
+}
+
+fillPage = function() {
+    
+}
+
+
+
+
+app.initialize();
