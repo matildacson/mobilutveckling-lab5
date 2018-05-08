@@ -8,9 +8,6 @@
 		shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 
 	<title>Basic Template App</title>
-	<style>
-		@import 'ui/css/evothings-app.css';
-    </style>
 
     <link rel="stylesheet" href="style.css" type="text/css"/>
 
@@ -24,27 +21,42 @@
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
 
     <div class="timeHeader">
-        <div class="header"><button>Back</button></div>
-        <div id="timeHeader" class="header">Time</div>
-        <div class="header"><button>Forward</button></div>
+        <div><button>Back</button></div>
+        <div id="timeHeader">Time</div>
+        <div><button>Forward</button></div>
     </div>
 
-    <div class="row">
+    <div class="smallContainers">
+        <div class="header">Temperature</div>
+        <div class="header">Humidity</div>
         <div class="smallContainer">
-            <div class="header">Temperature</div>
-            <div class="temp1"></div>
-            <div class="temp2"></div>
+            <div id="temp1" class="sensor1">38 grader</div>
+            <div id="temp2" class="sensor2">40 grader</div>
         </div>
         <div class="smallContainer">
-            <div class="header">Humidity</div>
-            <div class="humidity1"></div>
-            <div class="humidity2"></div>
+            <div id="humidity1" class="sensor1">23</div>
+            <div id="humidity2" class="sensor2">23</div>
         </div>
     </div>
-    <div class="row">
-        <div class="tallContainer"></div>
-        <div class="tallContainer"></div>
-        <div class="tallContainer"></div>
+    <div class="tallContainers">
+        <div class="row">
+            <div class="header">Lumination</div>
+            <div class="header">Barometic Pressure</div>
+            <div class="header">Carbon Dioxide</div>
+        </div>
+        <div class="tallContainer">
+
+            <div class="chart sensor1" id="lumination1">15</div>
+            <div class="chart sensor2" id="lumination2">12</div>
+        </div>
+        <div class="tallContainer">
+            <div class="chart sensor1" id="pressure1">34</div>
+            <div class="chart sensor2" id="pressure2">12</div>
+        </div>
+        <div class="tallContainer">
+            <div class="chart sensor1" id="carbon1">34</div>
+            <div class="chart sensor2" id="carbon 2">25</div>
+        </div>
     </div>
 
     <button onClick="getJSON();">Click to recieve sensor data</button>
