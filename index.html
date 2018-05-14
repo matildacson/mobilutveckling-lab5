@@ -20,21 +20,18 @@
 
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
 
-    <div class="timeHeader">
-        <div><button onClick="back()">Back</button></div>
-        <div id="timestamp">Time</div>
-        <div><button onClick="forward()">Forward</button></div>
+    <div class="timeHeader row">
+        <div class="left"><button onClick="back()">Back</button></div>
+        <div class="middle" id="timestamp">Time</div>
+        <div class="right"><button onClick="forward()">Forward</button></div>
     </div>
-
-    <div class="buttonContainer">
+	<div id="content">
+		<canvas id="tempChart"></canvas>
+		<canvas id="humChart"></canvas>
+		<canvas id="lumChart"></canvas>
+		<canvas id="carChart"></canvas>
+		<canvas id="preChart"></canvas>
 	</div>
-	
-	<canvas id="tempChart"></canvas>
-	<canvas id="humChart"></canvas>
-	<canvas id="lumChart"></canvas>
-	<canvas id="carChart"></canvas>
-	<canvas id="preChart"></canvas>
-
 
 
 
