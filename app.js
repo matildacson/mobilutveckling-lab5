@@ -28,7 +28,7 @@ app.initialize = function() {
 app.getOfficeJSON = function() {
     console.log('Using AJAX via jquery');
     $.ajax({
-        url: mSensorDataURL + sensor.officeKey + ".json?gt[timestamp]=now-2day&lt[timestamp]=now-0day",
+        url: mSensorDataURL + sensor.officeKey + ".json?gt[timestamp]=now-20day&lt[timestamp]=now-0day",
         jsonp: "callback",
         cache: true,
         dataType: "jsonp",
@@ -53,7 +53,7 @@ app.getOfficeJSON = function() {
 app.getRecJSON = function () {
     console.log('Using AJAX via jquery');
     $.ajax({
-        url: mSensorDataURL + sensor.recKey + ".json?gt[timestamp]=now-2day&lt[timestamp]=now-0day",
+        url: mSensorDataURL + sensor.recKey + ".json?gt[timestamp]=now-20day&lt[timestamp]=now-0day",
         jsonp: "callback",
         cache: true,
         dataType: "jsonp",
@@ -66,7 +66,7 @@ app.getRecJSON = function () {
                 sensor.recData = response[0];
                 sensor.recFullData = response;
                 sensor.recDone = true;
-                console.log("fill 2");
+                console.log("fill 2 " + sensor.recFullData.length);
                 fillPage();
             }
         }
@@ -75,7 +75,7 @@ app.getRecJSON = function () {
     
 back = function() {
     if(app.index != sensor.recFullData.length) {
-        app.index = app.index + 1
+        app.index = app.index + 24
         fillPage();
     }
 }
@@ -84,7 +84,7 @@ forward = function() {
     if(app.index === 0) {
         app.index = 0
     } else {
-        app.index = app.index - 1
+        app.index = app.index - 24
         fillPage()
     }
 }
@@ -95,37 +95,42 @@ fillPage = function() {
         return
     }
 
-    var officeData;
-    var recData;
+    var officeData = [];
+    var recData = [];
 
-    var previousHour = new Date(sensor.officeFullData[0]["timestamp"]).getHours();
-    officeData.push(sensor.officeFullData[0]);
+    var previousHour = new Date(sensor.officeFullData[app.index]["timestamp"]).getHours();
+    officeData.push(sensor.officeFullData[app.index]);
     for(data in sensor.officeFullData) {
-        var currentHour = new Date(data["timestamp"]).getHours();
+        var currentHour = new Date(sensor.officeFullData[data]["timestamp"]).getHours();
         if (currentHour != previousHour) {
             previousHour = currentHour;
-            officeData.push(data);
+            officeData.push(sensor.officeFullData[data]);
         }
     }
 
-    var previousHour = new Date(sensor.recFullData[0]["timestamp"]).getHours();
-    recData.push(sensor.recFullData[0]);
+    var previousHour = new Date(sensor.recFullData[app.index]["timestamp"]).getHours();
+    recData.push(sensor.recFullData[app.index]);
     for (data in sensor.recFullData) {
-        var currentHour = new Date(data["timestamp"]).getHours();
+        var currentHour = new Date(sensor.recFullData[data]["timestamp"]).getHours();
+        console.log("prev" + previousHour);
+        console.log("current" + currentHour)
         if (currentHour != previousHour) {
             previousHour = currentHour;
-            recData.push(data);
+            recData.push(sensor.recFullData[data]);
         }
     }
 
     officeData = officeData.slice(app.index, app.index + 24);
-    recData = recData.slice(app.index, app.index+24);
-
+    recData = recData.slice(app.index, app.index + 24);
 
     // Timestamp
     time = document.getElementById("timestamp");
-    var date = new Date(officeData[0]["timestamp"]);
-    time.innerHTML = date.toDateString();
+    try {
+        var date = new Date(officeData[0]["timestamp"]);
+        time.innerHTML = date.toDateString();
+    } catch (error) {
+        time.innerHTML = "No data " + app.index;
+    }
     
     officeTimestamps = []
     for(time in officeData) {
