@@ -28,13 +28,13 @@ app.initialize = function() {
 app.getOfficeJSON = function() {
     console.log('Using AJAX via jquery');
     $.ajax({
-        url: mSensorDataURL + sensor.officeKey + ".json?gt[timestamp]=now-20day&lt[timestamp]=now-0day",
+        url: mSensorDataURL + sensor.officeKey + ".json?gt[timestamp]=now-5day&lt[timestamp]=now-0day",
         jsonp: "callback",
         cache: true,
         dataType: "jsonp",
         data: 
         {
-            page: 1
+            page: 2
         },
         success: function(response) 
         {
@@ -53,13 +53,13 @@ app.getOfficeJSON = function() {
 app.getRecJSON = function () {
     console.log('Using AJAX via jquery');
     $.ajax({
-        url: mSensorDataURL + sensor.recKey + ".json?gt[timestamp]=now-20day&lt[timestamp]=now-0day",
+        url: mSensorDataURL + sensor.recKey + ".json?gt[timestamp]=now-5day&lt[timestamp]=now-0day",
         jsonp: "callback",
         cache: true,
         dataType: "jsonp",
         data:
             {
-                page: 1
+                page: 2
             },
         success: function (response) {
             if (response && response[0]) {
@@ -81,8 +81,9 @@ back = function() {
 }
 
 forward = function() {
-    if(app.index === 0) {
+    if(app.index <= 0) {
         app.index = 0
+        fillPage()
     } else {
         app.index = app.index - 24
         fillPage()
@@ -107,21 +108,24 @@ fillPage = function() {
             officeData.push(sensor.officeFullData[data]);
         }
     }
+    console.log("index: " + app.index)
+    console.log("fulldata: " + sensor.officeFullData.length)
 
+    console.log("recdata before: " + recData.length)
     var previousHour = new Date(sensor.recFullData[app.index]["timestamp"]).getHours();
     recData.push(sensor.recFullData[app.index]);
     for (data in sensor.recFullData) {
         var currentHour = new Date(sensor.recFullData[data]["timestamp"]).getHours();
-        console.log("prev" + previousHour);
-        console.log("current" + currentHour)
         if (currentHour != previousHour) {
             previousHour = currentHour;
             recData.push(sensor.recFullData[data]);
         }
     }
+    console.log("recdata after: " + recData.length)
 
     officeData = officeData.slice(app.index, app.index + 24);
     recData = recData.slice(app.index, app.index + 24);
+    console.log(officeData.length)
 
     // Timestamp
     time = document.getElementById("timestamp");
